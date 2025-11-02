@@ -25,7 +25,6 @@
             color: #e4e6eb;
         }
 
-        /* Улучшенный фон с градиентом */
         body::before {
             content: '';
             position: absolute;
@@ -51,7 +50,6 @@
             z-index: 1;
         }
 
-        /* Улучшенный эффект жидкого стекла */
         .card {
             border-radius: 16px;
             padding: 10px 0;
@@ -63,7 +61,6 @@
                 inset 0 -1px 1px rgba(0, 0, 0, 0.5);
         }
 
-        /* Основной стеклянный эффект */
         .card::before {
             content: '';
             position: absolute;
@@ -71,12 +68,11 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(30, 30, 30, 0.4); /* Увеличена прозрачность */
+            background: rgba(30, 30, 30, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
             z-index: -1;
         }
 
-        /* Дополнительные световые эффекты */
         .card::after {
             content: '';
             position: absolute;
@@ -170,7 +166,7 @@
             justify-content: center;
             min-width: 40px;
             position: relative;
-            background-color: rgba(255, 255, 255, 0.15); /* Более прозрачный белый */
+            background-color: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
@@ -184,7 +180,7 @@
             width: 18px;
             text-align: center;
             transition: opacity 0.3s ease;
-            color: #ffffff; /* Белые иконки */
+            color: #ffffff;
         }
 
         .btn-text {
@@ -272,7 +268,6 @@
             opacity: 0.8;
         }
         
-        /* Новый стиль для выравнивания заголовка Links по центру */
         .links-title {
             text-align: center;
             width: 100%;
@@ -305,8 +300,8 @@
                         <span>neist, neistv</span>
                     </li>
                     <li>
-                        <strong>Hobbies</strong>
-                        <span>Coding, Telegram development,<br>Web applications, Official beta tester of Telegram,<br>Writing mini-apps</span>
+                        <strong>Focus Areas</strong>
+                        <span>Coding, Official beta tester of Telegram,<br>Writing mini-apps</span>
                     </li>
                     <li>
                         <strong>Programming languages</strong>
@@ -339,7 +334,6 @@
     </div>
 
     <script>
-        // Прелоадер
         window.addEventListener('load', function() {
             const preloader = document.getElementById('preloader');
             preloader.style.opacity = '0';
