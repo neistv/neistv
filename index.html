@@ -3,343 +3,552 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@neistv</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>biography.</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://fav.farm/👤" type="image/x-icon">
+    <link rel="shortcut icon" href="https://fav.farm/👤" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://fav.farm/👤">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
+        * {
+            cursor: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        .custom-cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--md-sys-primary);
+            box-shadow: 0 0 10px var(--md-sys-primary);
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            mix-blend-mode: difference;
+        }
+        
+        .custom-cursor.clicked {
+            width: 25px;
+            height: 25px;
+            background-color: var(--md-sys-primary);
+            box-shadow: 0 0 20px var(--md-sys-primary);
+        }
+        
+        @keyframes clickEffect {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 1;
+                border-color: rgba(255, 255, 255, 0.8);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+                border-color: rgba(255, 255, 255, 0);
+            }
+        }
+        
+        .click-effect {
+            position: fixed;
+            border-radius: 50%;
+            border: 2px solid var(--md-sys-primary);
+            pointer-events: none;
+            z-index: 10000;
+            animation: clickEffect 0.5s forwards;
+            mix-blend-mode: difference;
+        }
+        
+        @media (max-width: 768px) {
+            .custom-cursor {
+                display: none;
+            }
+            * {
+                cursor: auto;
+            }
+        }
+
+        :root {
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --ease-material: cubic-bezier(0.2, 0, 0, 1);
+            
+            --radius-l: 28px;
+            --radius-m: 20px;
+            --radius-s: 12px;
+            --gap: 16px;
+
+            --md-sys-bg: #111114;
+            --md-sys-surface: #1e1e22;
+            --md-sys-surface-variant: #2f2f33;
+            --md-sys-on-surface: #e3e2e6;
+            --md-sys-primary: #d0bcff;
+            --md-sys-on-primary: #381e72;
+            --md-sys-secondary-container: #4a4458;
+            --md-sys-on-secondary-container: #e8def8;
+            --md-sys-outline: #938f99;
+            
+            --card-hover-scale: 1.02;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
+            background-color: var(--md-sys-bg);
+            color: var(--md-sys-on-surface);
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-            background-color: #0a0a0a;
-            color: #e4e6eb;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, #1a1a1a, #2d2d2d, #0f0f0f, #3d3d3d, #121212, #333333, #000000);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            z-index: -2;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            z-index: 1;
-        }
-
-        .card {
-            border-radius: 16px;
-            padding: 10px 0;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1),
-                inset 0 -1px 1px rgba(0, 0, 0, 0.5);
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(30, 30, 30, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: -1;
-        }
-
-        .card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 20%,
-                rgba(255, 255, 255, 0.03) 30%,
-                rgba(255, 255, 255, 0.05) 40%,
-                transparent 50%,
-                transparent 70%,
-                rgba(255, 255, 255, 0.03) 80%,
-                rgba(255, 255, 255, 0.05) 90%,
-                transparent 100%
-            );
-            transform: rotate(45deg);
-            animation: shine 8s infinite linear;
-            z-index: -1;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .top-bar {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 1.8em;
-            margin: 0;
-            font-weight: 700;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        li:last-child {
-            border-bottom: none;
-        }
-
-        li strong {
-            font-size: 1em;
-            font-weight: 700;
-        }
-
-        li span {
-            font-size: 1em;
-            text-align: right;
-        }
-
-        .social-buttons {
-            display: flex;
-            gap: 10px;
             justify-content: center;
-            width: 100%;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .social-btn {
-            display: inline-flex;
             align-items: center;
-            height: 40px;
-            padding: 0 15px;
-            border-radius: 12px;
-            text-decoration: none;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            justify-content: center;
-            min-width: 40px;
-            position: relative;
-            background-color: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .social-btn:hover {
-            transform: translateY(-2px);
-            background-color: rgba(255, 255, 255, 0.25);
-        }
-
-        .social-btn i {
-            font-size: 18px;
-            width: 18px;
-            text-align: center;
-            transition: opacity 0.3s ease;
-            color: #ffffff;
-        }
-
-        .btn-text {
-            font-weight: bold;
-            white-space: nowrap;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            color: #ffffff;
-        }
-
-        .social-btn:hover i {
-            opacity: 0;
-        }
-
-        .social-btn:hover .btn-text {
-            opacity: 1;
-        }
-
-        html, body {
+            padding: 20px;
             overflow-x: hidden;
         }
 
         #preloader {
             position: fixed;
-            z-index: 9999;
             inset: 0;
-            background: #0a0a0a;
-            color: #fff;
+            background: var(--md-sys-bg);
+            z-index: 9999;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.5s;
+            transition: opacity 0.6s var(--ease-material);
         }
-        #preloader .spinner {
-            width: 48px;
-            height: 48px;
-            border: 6px solid #fff;
-            border-top: 6px solid #888;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .loader-bar {
+            width: 60px;
+            height: 6px;
+            background: var(--md-sys-surface-variant);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+        .loader-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 30%;
+            background: var(--md-sys-primary);
+            border-radius: 99px;
+            animation: barMove 1.2s ease-in-out infinite alternate;
+        }
+        @keyframes barMove {
+            0% { left: 0; width: 20%; }
+            100% { left: 80%; width: 20%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            animation: slideUp 0.8s var(--ease-material);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 24px;
+            padding: 0 4px;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin: 0;
+            letter-spacing: -0.03em;
+            background: linear-gradient(90deg, var(--md-sys-on-surface), var(--md-sys-outline));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        #preloader .loading-text {
-            font-size: 1.4em;
-            letter-spacing: 2px;
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--gap);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .widget {
+            background-color: var(--md-sys-surface);
+            border-radius: var(--radius-l);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .widget:hover {
+            transform: scale(var(--card-hover-scale));
+            box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+
+        .widget-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            color: var(--md-sys-outline);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
+            gap: 8px;
         }
-        #preloader .dots {
-            display: inline-block;
-            width: auto;
-            text-align: left;
-            margin-left: 6px;
+        
+        .widget-content {
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--md-sys-on-surface);
         }
-        #preloader .dot {
-            opacity: 0.2;
-            animation: dotBlink 1.2s infinite;
-            font-size: 1.4em;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        #preloader .dot:nth-child(1) { animation-delay: 0s; }
-        #preloader .dot:nth-child(2) { animation-delay: 0.3s; }
-        #preloader .dot:nth-child(3) { animation-delay: 0.6s; }
-        @keyframes dotBlink {
-            0%, 80%, 100% { opacity: 0.2; }
-            40% { opacity: 1; }
+        
+        .widget-content span {
+            display: block;
         }
 
         .highlight {
-            color: #a0a0a0;
-            font-weight: 700;
+            color: var(--md-sys-primary);
+        }
+
+        .col-span-2 {
+            grid-column: span 2;
+        }
+
+        .social-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .social-pill {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px;
+            background-color: var(--md-sys-surface-variant);
+            color: var(--md-sys-on-secondary-container);
+            text-decoration: none;
+            border-radius: 99px;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.3s var(--ease-spring);
+        }
+
+        .social-pill:hover {
+            background-color: var(--md-sys-primary);
+            color: var(--md-sys-on-primary);
+            transform: translateY(-2px);
+        }
+
+        .widget:nth-child(1) { animation: fadeInUp 0.6s 0.1s backwards var(--ease-material); }
+        .widget:nth-child(2) { animation: fadeInUp 0.6s 0.2s backwards var(--ease-material); }
+        .widget:nth-child(3) { animation: fadeInUp 0.6s 0.3s backwards var(--ease-material); }
+        .widget:nth-child(4) { animation: fadeInUp 0.6s 0.4s backwards var(--ease-material); }
+        .widget:nth-child(5) { animation: fadeInUp 0.6s 0.5s backwards var(--ease-material); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 400px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .col-span-2 { grid-column: span 1; }
+        }
+
+        .pill-badge {
+            font-size: 0.75rem;
+            background: var(--md-sys-primary);
+            color: var(--md-sys-on-primary);
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-left: 6px;
+            vertical-align: middle;
         }
         
-        .mystery-text {
-            font-style: italic;
-            opacity: 0.8;
-        }
-        
-        .links-title {
-            text-align: center;
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: var(--md-sys-surface);
+            border-radius: var(--radius-l);
+            padding: 32px;
+            max-width: 300px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s var(--ease-spring);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        
+        .modal h3 {
+            margin: 0 0 20px 0;
+            color: var(--md-sys-on-surface);
+            font-family: 'Outfit', sans-serif;
+        }
+        
+        .discord-id {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--md-sys-surface-variant);
+            padding: 16px;
+            border-radius: var(--radius-m);
+            margin-bottom: 24px;
+            font-family: 'Inter', monospace;
+            font-size: 1.2rem;
+            color: var(--md-sys-on-surface);
+        }
+        
+        .copy-btn {
+            background: var(--md-sys-primary);
+            color: var(--md-sys-on-primary);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-m);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        
+        .copy-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .copy-btn.copied {
+            background: #4CAF50;
         }
     </style>
 </head>
-<body>
+<body onselectstart="return false" ondragstart="return false">
+    
+    <div class="custom-cursor" id="cursor"></div>
+    
     <div id="preloader">
-        <div class="spinner"></div>
-        <div class="loading-text">
-            Loading
-            <span class="dots">
-                <span class="dot">.</span>
-                <span class="dot">.</span>
-                <span class="dot">.</span>
-            </span>
-        </div>
+        <div class="loader-bar"></div>
     </div>
 
     <div class="container">
-        <div class="top-bar">
-            <h1>neist<span class="highlight">v</span></h1>
-        </div>
+        <header class="header">
+            <h1>biography.</h1>
+        </header>
 
-        <main>
-            <div class="card">
-                <ul>
-                    <li>
-                        <strong>Nicknames</strong>
-                        <span>neist, neistv</span>
-                    </li>
-                    <li>
-                        <strong>Focus Areas</strong>
-                        <span>Coding, Official beta tester of Telegram,<br>Writing mini-apps</span>
-                    </li>
-                    <li>
-                        <strong>Programming languages</strong>
-                        <span>Python, HTML, CSS, Swift - Apple Developer</span>
-                    </li>
-                    <li>
-                        <strong class="links-title">Links</strong>
-                        <div class="social-buttons">
-                            <a href="https://t.me/neistv" target="_blank" class="social-btn" aria-label="Telegram">
-                                <i class="fa-brands fa-telegram"></i>
-                                <span class="btn-text">Telegram</span>
-                            </a>
-                            <a href="https://t.me/send?start=IVRqEuInCdpi" target="_blank" class="social-btn" aria-label="Donate">
-                                <i class="fa-solid fa-hand-holding-dollar"></i>
-                                <span class="btn-text">Donate</span>
-                            </a>
-                            <a href="https://t.me/neistvbot?start=Neistfeedback" target="_blank" class="social-btn" aria-label="Feedback">
-                                <i class="fa-solid fa-comment"></i>
-                                <span class="btn-text">Feedback</span>
-                            </a>
-                            <a href="https://t.me/nometaxxx" target="_blank" class="social-btn" aria-label="No meta">
-                                <i class="fa-solid fa-ban"></i>
-                                <span class="btn-text">No meta</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+        <main class="bento-grid">
+            <div class="widget col-span-2">
+                <div class="widget-title"><i class="fa-solid fa-id-card"></i> Identity</div>
+                <div class="widget-content">
+                    Known as <span class="highlight" style="font-size: 1.4em;">neist</span>
+                    <div style="opacity: 0.6; font-size: 0.9em; margin-top: 4px;">aka neistv | potrebnozt</div>
+                </div>
+            </div>
+
+            <div class="widget">
+                <div class="widget-title"><i class="fa-solid fa-microchip"></i> Systems</div>
+                <div class="widget-content">
+                    iOS 18.1
+                    <span style="margin-top: 4px; font-size: 0.9em; opacity: 0.8;">Windows 11 | Arch Linux</span>
+                </div>
+            </div>
+
+            <div class="widget">
+                <div class="widget-title"><i class="fa-solid fa-desktop"></i> Hardware</div>
+                <div class="widget-content">
+                    RTX 3060 12GB Dual
+                    <span style="opacity: 0.8; font-size: 0.95em;">AMD Ryzen 9 7900X</span>
+                </div>
+            </div>
+
+            <div class="widget col-span-2">
+                <div class="widget-title"><i class="fa-solid fa-code"></i> Skills</div>
+                <div class="widget-content">
+                    Python, HTML, CSS
+                    <span style="opacity: 0.8; font-size: 0.95em;">Swift, Telegram miniapp</span>
+                </div>
+            </div>
+
+            <div class="widget col-span-2" style="background: transparent; border: none; padding: 0; box-shadow: none;">
+                <div class="social-group">
+                    <a href="https://t.me/neistv" target="_blank" class="social-pill">
+                        <i class="fa-brands fa-telegram"></i> Telegram
+                    </a>
+                    <a href="#" class="social-pill" id="discord-btn">
+                        <i class="fa-brands fa-discord"></i> Discord
+                    </a>
+                </div>
             </div>
         </main>
     </div>
+    
+    <div class="modal-overlay" id="discord-modal">
+        <div class="modal">
+            <h3>Discord Username</h3>
+            <div class="discord-id">
+                <span>neistv</span>
+                <i class="fa-regular fa-copy"></i>
+            </div>
+            <button class="copy-btn" id="copy-btn">Copy to Clipboard</button>
+        </div>
+    </div>
 
     <script>
-        window.addEventListener('load', function() {
+        const cursor = document.getElementById('cursor');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let isMouseDown = false;
+        
+        function updateCursorPosition(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        }
+        
+        function handleMouseDown() {
+            isMouseDown = true;
+            cursor.classList.add('clicked');
+            
+            const clickEffect = document.createElement('div');
+            clickEffect.className = 'click-effect';
+            clickEffect.style.left = mouseX + 'px';
+            clickEffect.style.top = mouseY + 'px';
+            clickEffect.style.width = '30px';
+            clickEffect.style.height = '30px';
+            document.body.appendChild(clickEffect);
+            
+            setTimeout(() => {
+                if (clickEffect.parentNode) {
+                    clickEffect.parentNode.removeChild(clickEffect);
+                }
+            }, 500);
+        }
+        
+        function handleMouseUp() {
+            isMouseDown = false;
+            cursor.classList.remove('clicked');
+        }
+        
+        document.addEventListener('mousemove', updateCursorPosition);
+        document.addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('mouseup', handleMouseUp);
+        
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+        });
+
+        document.addEventListener('selectstart', (e) => {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+        });
+
+        window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 500);
+            setTimeout(() => preloader.remove(), 600);
+        });
+        
+        const discordBtn = document.getElementById('discord-btn');
+        const discordModal = document.getElementById('discord-modal');
+        const copyBtn = document.getElementById('copy-btn');
+        
+        discordBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            discordModal.classList.add('active');
+        });
+        
+        discordModal.addEventListener('click', (e) => {
+            if (e.target === discordModal) {
+                discordModal.classList.remove('active');
+            }
+        });
+        
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText('neistv').then(() => {
+                copyBtn.textContent = 'Copied!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy to Clipboard';
+                    copyBtn.classList.remove('copied');
+                }, 1500);
+            });
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && discordModal.classList.contains('active')) {
+                discordModal.classList.remove('active');
+            }
         });
     </script>
 </body>
