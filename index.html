@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>biography.</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" href="https://fav.farm/👤" type="image/x-icon">
-    <link rel="shortcut icon" href="https://fav.farm/👤" type="image/x-icon">
-    <link rel="apple-touch-icon" href="https://fav.farm/👤">
-    
+    <title>biography · liquid glass + spinning top</title>
+    <link rel="icon" href="https://fav.farm/✨" type="image/x-icon">
+    <link rel="shortcut icon" href="https://fav.farm/✨" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://fav.farm/✨">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <style>
         * {
             cursor: none;
@@ -29,6 +25,8 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            margin: 0;
+            overflow-x: hidden;
         }
         
         .custom-cursor {
@@ -36,20 +34,21 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: var(--md-sys-primary);
-            box-shadow: 0 0 10px var(--md-sys-primary);
+            background-color: rgba(208, 188, 255, 0.9);
+            box-shadow: 0 0 15px #d0bcff, 0 0 30px #b794f6;
             pointer-events: none;
             z-index: 10001;
             transform: translate(-50%, -50%);
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            mix-blend-mode: difference;
+            mix-blend-mode: normal;
+            backdrop-filter: blur(1px);
         }
         
         .custom-cursor.clicked {
             width: 25px;
             height: 25px;
-            background-color: var(--md-sys-primary);
-            box-shadow: 0 0 20px var(--md-sys-primary);
+            background-color: #fff;
+            box-shadow: 0 0 30px #d0bcff;
         }
         
         @keyframes clickEffect {
@@ -68,11 +67,11 @@
         .click-effect {
             position: fixed;
             border-radius: 50%;
-            border: 2px solid var(--md-sys-primary);
+            border: 2px solid #d0bcff;
             pointer-events: none;
             z-index: 10000;
             animation: clickEffect 0.5s forwards;
-            mix-blend-mode: difference;
+            mix-blend-mode: normal;
         }
         
         @media (max-width: 768px) {
@@ -87,23 +86,20 @@
         :root {
             --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
             --ease-material: cubic-bezier(0.2, 0, 0, 1);
+            --ease-liquid: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-spin: cubic-bezier(0.23, 1, 0.32, 1);
             
             --radius-l: 28px;
             --radius-m: 20px;
             --radius-s: 12px;
             --gap: 16px;
 
-            --md-sys-bg: #111114;
-            --md-sys-surface: #1e1e22;
-            --md-sys-surface-variant: #2f2f33;
-            --md-sys-on-surface: #e3e2e6;
-            --md-sys-primary: #d0bcff;
-            --md-sys-on-primary: #381e72;
-            --md-sys-secondary-container: #4a4458;
-            --md-sys-on-secondary-container: #e8def8;
-            --md-sys-outline: #938f99;
-            
-            --card-hover-scale: 1.02;
+            --glass-bg: rgba(30, 30, 34, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --primary-glow: #d0bcff;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
         }
 
         * {
@@ -113,34 +109,53 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--md-sys-bg);
-            color: var(--md-sys-on-surface);
-            margin: 0;
+            background: radial-gradient(circle at 30% 30%, #2a1c3a, #0b0b12);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow-x: hidden;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(208,188,255,0.15) 0%, transparent 60%);
+            animation: rotate 30s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         #preloader {
             position: fixed;
             inset: 0;
-            background: var(--md-sys-bg);
+            background: #0b0b12;
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
             transition: opacity 0.6s var(--ease-material);
+            pointer-events: none;
         }
         .loader-bar {
             width: 60px;
             height: 6px;
-            background: var(--md-sys-surface-variant);
+            background: rgba(255,255,255,0.1);
             border-radius: 99px;
             overflow: hidden;
             position: relative;
+            backdrop-filter: blur(5px);
         }
         .loader-bar::after {
             content: '';
@@ -149,9 +164,10 @@
             left: 0;
             height: 100%;
             width: 30%;
-            background: var(--md-sys-primary);
+            background: var(--primary-glow);
             border-radius: 99px;
             animation: barMove 1.2s ease-in-out infinite alternate;
+            box-shadow: 0 0 10px var(--primary-glow);
         }
         @keyframes barMove {
             0% { left: 0; width: 20%; }
@@ -161,12 +177,17 @@
         .container {
             width: 100%;
             max-width: 500px;
-            animation: slideUp 0.8s var(--ease-material);
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s var(--ease-material), transform 0.8s var(--ease-material);
+            position: relative;
+            z-index: 2;
+            animation: fadeGlow 2s infinite alternate;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(208,188,255,0.3)); }
+            100% { filter: drop-shadow(0 0 20px rgba(208,188,255,0.7)); }
         }
 
         .header {
@@ -179,13 +200,14 @@
 
         h1 {
             font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 2.2rem;
+            font-weight: 800;
+            font-size: 2.4rem;
             margin: 0;
             letter-spacing: -0.03em;
-            background: linear-gradient(90deg, var(--md-sys-on-surface), var(--md-sys-outline));
+            background: linear-gradient(135deg, #ffffff, #e0d0ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(208,188,255,0.5);
         }
 
         .bento-grid {
@@ -198,7 +220,9 @@
         }
 
         .widget {
-            background-color: var(--md-sys-surface);
+            background: var(--glass-bg);
+            backdrop-filter: url(#displacementFilter) blur(18px) saturate(160%);
+            -webkit-backdrop-filter: url(#displacementFilter) blur(18px) saturate(160%);
             border-radius: var(--radius-l);
             padding: 24px;
             display: flex;
@@ -207,19 +231,14 @@
             transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .widget:hover {
-            transform: scale(var(--card-hover-scale));
-            box-shadow: 0 12px 32px rgba(0,0,0,0.3);
-            z-index: 2;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
         }
 
         .widget-title {
             font-family: 'Outfit', sans-serif;
             font-size: 0.9rem;
-            color: var(--md-sys-outline);
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             font-weight: 700;
@@ -232,8 +251,9 @@
         .widget-content {
             font-size: 1.1rem;
             font-weight: 500;
-            line-height: 1.4;
-            color: var(--md-sys-on-surface);
+            line-height: 1.5;
+            color: var(--text-primary);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
         
         .widget-content span {
@@ -241,7 +261,10 @@
         }
 
         .highlight {
-            color: var(--md-sys-primary);
+            color: var(--primary-glow);
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--primary-glow);
+            transition: opacity 0.5s ease;
         }
 
         .col-span-2 {
@@ -250,37 +273,45 @@
 
         .social-group {
             display: flex;
-            gap: 12px;
+            justify-content: center;
+            gap: 16px;
             margin-top: 8px;
         }
 
         .social-pill {
-            flex: 1;
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 16px;
-            background-color: var(--md-sys-surface-variant);
-            color: var(--md-sys-on-secondary-container);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
+            color: white;
             text-decoration: none;
-            border-radius: 99px;
-            font-weight: 600;
+            border-radius: 50%;
             font-family: 'Outfit', sans-serif;
             transition: all 0.3s var(--ease-spring);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .social-pill > i {
+            font-size: 1.5rem;
+            margin: 0;
         }
 
         .social-pill:hover {
-            background-color: var(--md-sys-primary);
-            color: var(--md-sys-on-primary);
-            transform: translateY(-2px);
+            background: rgba(208,188,255,0.2);
+            border-color: var(--primary-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(208,188,255,0.4);
+            color: #fff;
         }
 
         .widget:nth-child(1) { animation: fadeInUp 0.6s 0.1s backwards var(--ease-material); }
         .widget:nth-child(2) { animation: fadeInUp 0.6s 0.2s backwards var(--ease-material); }
         .widget:nth-child(3) { animation: fadeInUp 0.6s 0.3s backwards var(--ease-material); }
-        .widget:nth-child(4) { animation: fadeInUp 0.6s 0.4s backwards var(--ease-material); }
-        .widget:nth-child(5) { animation: fadeInUp 0.6s 0.5s backwards var(--ease-material); }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -292,30 +323,23 @@
             .col-span-2 { grid-column: span 1; }
         }
 
-        .pill-badge {
-            font-size: 0.75rem;
-            background: var(--md-sys-primary);
-            color: var(--md-sys-on-primary);
-            padding: 2px 8px;
-            border-radius: 6px;
-            margin-left: 6px;
-            vertical-align: middle;
-        }
-        
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px) saturate(180%);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
+            transition: opacity 0.4s, visibility 0.4s;
+            perspective: 1200px;
+            perspective-origin: center;
         }
         
         .modal-overlay.active {
@@ -324,26 +348,48 @@
         }
         
         .modal {
-            background: var(--md-sys-surface);
+            background: rgba(25, 25, 35, 0.5);
+            backdrop-filter: url(#displacementFilter) blur(30px) saturate(200%);
+            -webkit-backdrop-filter: url(#displacementFilter) blur(30px) saturate(200%);
             border-radius: var(--radius-l);
             padding: 32px;
             max-width: 300px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            transform: translateY(20px);
-            transition: transform 0.3s var(--ease-spring);
-            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(208,188,255,0.4), inset 0 0 20px rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            transform: rotateY(720deg) scale(0.2) translateZ(-200px);
+            opacity: 0;
+            transition: transform 1s var(--ease-spin), opacity 0.8s ease-out;
+            transform-origin: center center;
+            transform-style: preserve-3d;
         }
         
         .modal-overlay.active .modal {
-            transform: translateY(0);
+            transform: rotateY(0deg) scale(1) translateZ(0);
+            opacity: 1;
+        }
+        
+        .modal::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 70%);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
         
         .modal h3 {
             margin: 0 0 20px 0;
-            color: var(--md-sys-on-surface);
+            color: white;
             font-family: 'Outfit', sans-serif;
+            text-shadow: 0 2px 10px rgba(208,188,255,0.5);
+            letter-spacing: 0.5px;
         }
         
         .discord-id {
@@ -351,49 +397,81 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            background: var(--md-sys-surface-variant);
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 16px;
             border-radius: var(--radius-m);
             margin-bottom: 24px;
             font-family: 'Inter', monospace;
-            font-size: 1.2rem;
-            color: var(--md-sys-on-surface);
+            font-size: 1.3rem;
+            color: var(--primary-glow);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.3), 0 0 15px rgba(208,188,255,0.3);
+            text-shadow: 0 0 8px currentColor;
         }
         
         .copy-btn {
-            background: var(--md-sys-primary);
-            color: var(--md-sys-on-primary);
-            border: none;
-            padding: 12px 24px;
+            background: rgba(208, 188, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 14px 28px;
             border-radius: var(--radius-m);
             font-family: 'Outfit', sans-serif;
             font-weight: 600;
+            font-size: 1rem;
             cursor: none;
-            transition: transform 0.2s, background-color 0.2s;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 20px rgba(208,188,255,0.3), inset 0 1px 2px rgba(255,255,255,0.3);
+            width: 100%;
+            letter-spacing: 0.3px;
         }
         
         .copy-btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
+            background: rgba(208, 188, 255, 0.35);
+            box-shadow: 0 0 30px rgba(208,188,255,0.6), inset 0 1px 4px white;
         }
         
         .copy-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.97);
         }
         
         .copy-btn.copied {
-            background: #4CAF50;
+            background: rgba(76, 175, 80, 0.4);
+            box-shadow: 0 0 30px #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .effect-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20000;
         }
     </style>
 </head>
 <body onselectstart="return false" ondragstart="return false">
-    
+    <svg style="display: none;">
+        <filter id="displacementFilter">
+            <feImage href="data:image/png;base64,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" result="displacementMap" />
+            <feDisplacementMap in2="displacementMap" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G" />
+            <feGaussianBlur stdDeviation="8" />
+        </filter>
+    </svg>
+
     <div class="custom-cursor" id="cursor"></div>
     
     <div id="preloader">
         <div class="loader-bar"></div>
     </div>
 
-    <div class="container">
+    <div class="container" id="main-content">
         <header class="header">
             <h1>biography.</h1>
         </header>
@@ -402,42 +480,34 @@
             <div class="widget col-span-2">
                 <div class="widget-title"><i class="fa-solid fa-id-card"></i> Identity</div>
                 <div class="widget-content">
-                    Known as <span class="highlight" style="font-size: 1.4em;">neist</span>
-                    <div style="opacity: 0.6; font-size: 0.9em; margin-top: 4px;">aka neistv | potrebnozt</div>
+                    Known as <span class="highlight" id="dynamic-name">neist</span>
                 </div>
             </div>
 
             <div class="widget">
                 <div class="widget-title"><i class="fa-solid fa-microchip"></i> Systems</div>
                 <div class="widget-content">
-                    iOS 18.1
-                    <span style="margin-top: 4px; font-size: 0.9em; opacity: 0.8;">Windows 11 | Arch Linux</span>
+                    iOS 18.1<br>
+                    Windows 11<br>
+                    Arch Linux
                 </div>
             </div>
 
             <div class="widget">
-                <div class="widget-title"><i class="fa-solid fa-desktop"></i> Hardware</div>
-                <div class="widget-content">
-                    RTX 3060 12GB Dual
-                    <span style="opacity: 0.8; font-size: 0.95em;">AMD Ryzen 9 7900X</span>
-                </div>
-            </div>
-
-            <div class="widget col-span-2">
                 <div class="widget-title"><i class="fa-solid fa-code"></i> Skills</div>
                 <div class="widget-content">
-                    Python, HTML, CSS
-                    <span style="opacity: 0.8; font-size: 0.95em;">Swift, Telegram miniapp</span>
+                    Python ﾂｷ HTML/CSS<br>
+                    Swift ﾂｷ Telegram Mini Apps
                 </div>
             </div>
 
-            <div class="widget col-span-2" style="background: transparent; border: none; padding: 0; box-shadow: none;">
+            <div class="col-span-2" style="margin-top: 8px;">
                 <div class="social-group">
-                    <a href="https://t.me/neistv" target="_blank" class="social-pill">
-                        <i class="fa-brands fa-telegram"></i> Telegram
+                    <a href="https://t.me/neistv" target="_blank" class="social-pill" id="telegram-link">
+                        <i class="fa-brands fa-telegram"></i>
                     </a>
                     <a href="#" class="social-pill" id="discord-btn">
-                        <i class="fa-brands fa-discord"></i> Discord
+                        <i class="fa-brands fa-discord"></i>
                     </a>
                 </div>
             </div>
@@ -448,8 +518,8 @@
         <div class="modal">
             <h3>Discord Username</h3>
             <div class="discord-id">
-                <span>neistv</span>
-                <i class="fa-regular fa-copy"></i>
+                <span>neist</span>
+                
             </div>
             <button class="copy-btn" id="copy-btn">Copy to Clipboard</button>
         </div>
@@ -459,20 +529,16 @@
         const cursor = document.getElementById('cursor');
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
-        let isMouseDown = false;
         
         function updateCursorPosition(e) {
             mouseX = e.clientX;
             mouseY = e.clientY;
-            
             cursor.style.left = mouseX + 'px';
             cursor.style.top = mouseY + 'px';
         }
         
         function handleMouseDown() {
-            isMouseDown = true;
             cursor.classList.add('clicked');
-            
             const clickEffect = document.createElement('div');
             clickEffect.className = 'click-effect';
             clickEffect.style.left = mouseX + 'px';
@@ -480,45 +546,42 @@
             clickEffect.style.width = '30px';
             clickEffect.style.height = '30px';
             document.body.appendChild(clickEffect);
-            
             setTimeout(() => {
-                if (clickEffect.parentNode) {
-                    clickEffect.parentNode.removeChild(clickEffect);
-                }
+                if (clickEffect.parentNode) clickEffect.parentNode.removeChild(clickEffect);
             }, 500);
         }
         
         function handleMouseUp() {
-            isMouseDown = false;
             cursor.classList.remove('clicked');
         }
         
         document.addEventListener('mousemove', updateCursorPosition);
         document.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mouseup', handleMouseUp);
-        
-        document.addEventListener('mouseleave', () => {
-            cursor.style.opacity = '0';
-        });
-        
-        document.addEventListener('mouseenter', () => {
-            cursor.style.opacity = '1';
-        });
-
-        document.addEventListener('selectstart', (e) => {
-            e.preventDefault();
-        });
-        
-        document.addEventListener('dragstart', (e) => {
-            e.preventDefault();
-        });
+        document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+        document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+        document.addEventListener('selectstart', (e) => e.preventDefault());
+        document.addEventListener('dragstart', (e) => e.preventDefault());
 
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             preloader.style.opacity = '0';
             setTimeout(() => preloader.remove(), 600);
         });
+
+        const nameElement = document.getElementById('dynamic-name');
+        const names = ['neist', 'neist'];
+        let nameIndex = 0;
         
+        setInterval(() => {
+            nameElement.style.opacity = '0';
+            setTimeout(() => {
+                nameIndex = (nameIndex + 1) % names.length;
+                nameElement.textContent = names[nameIndex];
+                nameElement.style.opacity = '1';
+            }, 500);
+        }, 3000);
+
         const discordBtn = document.getElementById('discord-btn');
         const discordModal = document.getElementById('discord-modal');
         const copyBtn = document.getElementById('copy-btn');
@@ -529,13 +592,11 @@
         });
         
         discordModal.addEventListener('click', (e) => {
-            if (e.target === discordModal) {
-                discordModal.classList.remove('active');
-            }
+            if (e.target === discordModal) discordModal.classList.remove('active');
         });
         
         copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText('neistv').then(() => {
+            navigator.clipboard.writeText('neist').then(() => {
                 copyBtn.textContent = 'Copied!';
                 copyBtn.classList.add('copied');
                 setTimeout(() => {
@@ -549,6 +610,101 @@
             if (e.key === 'Escape' && discordModal.classList.contains('active')) {
                 discordModal.classList.remove('active');
             }
+        });
+
+        const telegramLink = document.getElementById('telegram-link');
+        
+        telegramLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const url = telegramLink.href;
+            
+            const canvas = document.createElement('canvas');
+            canvas.style.position = 'fixed';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.width = '100vw';
+            canvas.style.height = '100vh';
+            canvas.style.zIndex = '99999';
+            canvas.style.pointerEvents = 'none';
+            document.body.appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            let cx = canvas.width / 2;
+            let cy = canvas.height / 2;
+            
+            let stars = [];
+            for(let i=0; i<600; i++) {
+                stars.push({
+                    x: (Math.random() - 0.5) * canvas.width * 2,
+                    y: (Math.random() - 0.5) * canvas.height * 2,
+                    z: Math.random() * canvas.width,
+                    color: Math.random() > 0.4 ? '#d0bcff' : '#ffffff'
+                });
+            }
+            
+            let speed = 0.5;
+            let acc = 0.2;
+            let flash = 0;
+            
+            document.querySelector('.container').style.transition = 'transform 2s cubic-bezier(0.1, 0.7, 0.1, 1), opacity 2s, filter 2s';
+            document.querySelector('.container').style.transform = 'scale(0.01) rotate(45deg)';
+            document.querySelector('.container').style.opacity = '0';
+            document.querySelector('.container').style.filter = 'blur(30px)';
+            
+            function animate() {
+                ctx.fillStyle = `rgba(11, 11, 18, 0.2)`;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                speed += acc;
+                acc += 0.05;
+                
+                ctx.translate(cx, cy);
+                
+                stars.forEach(star => {
+                    star.z -= speed;
+                    if (star.z <= 0) {
+                        star.x = (Math.random() - 0.5) * canvas.width * 2;
+                        star.y = (Math.random() - 0.5) * canvas.height * 2;
+                        star.z = canvas.width;
+                    }
+                    
+                    let px = (star.x / star.z) * cx;
+                    let py = (star.y / star.z) * cy;
+                    
+                    let pz = star.z + speed;
+                    let ppx = (star.x / pz) * cx;
+                    let ppy = (star.y / pz) * cy;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(ppx, ppy);
+                    ctx.lineTo(px, py);
+                    ctx.strokeStyle = star.color;
+                    ctx.lineWidth = Math.max(0.1, (canvas.width - star.z) / 100);
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = star.color;
+                    ctx.stroke();
+                });
+                
+                ctx.translate(-cx, -cy);
+                
+                if (speed > 80) {
+                    flash += 0.05;
+                    ctx.fillStyle = `rgba(208, 188, 255, ${flash})`;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    if (flash >= 1.2) {
+                        window.location.href = url;
+                        return;
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
         });
     </script>
 </body>
