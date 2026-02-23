@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t.me/neistv | Lunaсy best!</title>
+    <title>t.me/neistv|Lunacybest</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="favicon.ico">
@@ -264,7 +264,6 @@
             color: var(--primary-glow);
             font-weight: 700;
             text-shadow: 0 0 10px var(--primary-glow);
-            transition: opacity 0.5s ease;
         }
 
         .col-span-2 {
@@ -519,7 +518,6 @@
             <h3>Discord Username</h3>
             <div class="discord-id">
                 <span>neist</span>
-                
             </div>
             <button class="copy-btn" id="copy-btn">Copy to Clipboard</button>
         </div>
@@ -568,19 +566,6 @@
             preloader.style.opacity = '0';
             setTimeout(() => preloader.remove(), 600);
         });
-
-        const nameElement = document.getElementById('dynamic-name');
-        const names = ['neist', 'neist'];
-        let nameIndex = 0;
-        
-        setInterval(() => {
-            nameElement.style.opacity = '0';
-            setTimeout(() => {
-                nameIndex = (nameIndex + 1) % names.length;
-                nameElement.textContent = names[nameIndex];
-                nameElement.style.opacity = '1';
-            }, 500);
-        }, 3000);
 
         const discordBtn = document.getElementById('discord-btn');
         const discordModal = document.getElementById('discord-modal');
